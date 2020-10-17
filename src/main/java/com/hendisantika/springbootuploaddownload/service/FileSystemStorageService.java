@@ -1,12 +1,16 @@
 package com.hendisantika.springbootuploaddownload.service;
 
+import com.hendisantika.springbootuploaddownload.exception.FileNotFoundException;
 import com.hendisantika.springbootuploaddownload.exception.FileStorageException;
 import com.hendisantika.springbootuploaddownload.properties.FileUploadProperties;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -52,6 +56,21 @@ public class FileSystemStorageService implements IFileSystemStorage {
             return fileName;
         } catch (Exception e) {
             throw new FileStorageException("Could not upload file");
+        }
+    }
+
+    @Override
+    public Resource loadFile(String fileName) {
+        try {
+            Path file = this.dirLocation.resolve(fileName).normalize();
+            Resource resource = new UrlResource(file.toUri());
+            if (resource.exists() || resource.isReadable()) {
+                return resource;
+            } else {
+                throw new FileNotFoundException("Could not find file");
+            }
+        } catch (MalformedURLException e) {
+            throw new FileNotFoundException("Could not download file");
         }
     }
 }
