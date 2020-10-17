@@ -1,9 +1,12 @@
 package com.hendisantika.springbootuploaddownload.service;
 
+import com.hendisantika.springbootuploaddownload.exception.FileStorageException;
 import com.hendisantika.springbootuploaddownload.properties.FileUploadProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -26,5 +29,16 @@ public class FileSystemStorageService implements IFileSystemStorage {
         this.dirLocation = Paths.get(fileUploadProperties.getLocation())
                 .toAbsolutePath()
                 .normalize();
+    }
+
+    @Override
+    @PostConstruct
+    public void init() {
+        try {
+            Files.createDirectories(this.dirLocation);
+        } catch (Exception ex) {
+            throw new FileStorageException("Could not create upload dir!");
+        }
+
     }
 }
