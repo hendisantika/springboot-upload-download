@@ -1,0 +1,94 @@
+{
+  "info": {
+    "_postman_id": "fd050c3e-79d4-41ca-91a5-9e156942e01c",
+    "name": "Spring Boot Upload Download File",
+    "description": "Spring Boot Upload Download File",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Upload File",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "file",
+              "type": "file",
+              "src": "/Users/hendisantika/Desktop/amartha.jpg"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/uploadfile",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "uploadfile"
+          ]
+        },
+        "description": "Upload File"
+      },
+      "response": []
+    },
+    {
+      "name": "Uploading multiple files ",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "files",
+              "type": "file",
+              "src": [
+                "/Users/hendisantika/Desktop/desa.png",
+                "/Users/hendisantika/Desktop/girl.png"
+              ]
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/uploadfiles?file",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "uploadfiles"
+          ],
+          "query": [
+            {
+              "key": "file",
+              "value": null
+            }
+          ]
+        },
+        "description": "Uploading multiple files "
+      },
+      "response": []
+    },
+    {
+      "name": "Download file ",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": ""
+        },
+        "description": "Download file "
+      },
+      "response": []
+    }
+  ],
+  "protocolProfileBehavior": {}
+}
